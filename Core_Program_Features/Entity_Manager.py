@@ -5,7 +5,7 @@ class EntityManager:
     def __init__(self):
         self.EntityList = []
 
-    def update(self, windowmanager: Core_Program_Features.Window, gameinfo):
+    def update(self, windowmanager: Core_Program_Features.Window, gameinfo: Core_Program_Features.GameInfo):
         for entity in self.EntityList:
             entity.update(gameinfo)
             windowmanager.render(entity.return_render_data())

@@ -2,7 +2,7 @@ import pygame
 
 
 class EntityBase:
-    def __init__(self, coords: tuple = (0, 0), scale: tuple = (50, 50), sprite: dict = None):
+    def __init__(self, coords: tuple = (0, 0), scale: tuple = (50, 50), sprite: tuple = None):
 
         self.x = coords[0]
         self.y = coords[1]
@@ -14,35 +14,22 @@ class EntityBase:
 
         # default sprite
         if sprite is None:
-            self.sprite = {
-                "Sprite": self.rect,
-                "Color": (0, 255, 255)}
-
+            self.sprite = (self.rect, (255, 255, 0))
         else:
 
-            if type(sprite["Sprite"]) == pygame.Rect:
-                self.sprite = {
-                    "Sprite": self.rect,
-                    "Color": sprite["Color"]}
-            elif type(sprite["Sprite"]) == pygame.Surface:
-                self.sprite = {
-                    "Sprite": pygame.transform.scale(sprite["Sprite"], (self.width, self.height)),
-                    "Coordinates": sprite["Coordinates"]
-                }
+            if type(sprite[0]) == pygame.Rect:
+                self.sprite = (self.rect, sprite[1])
+            elif type(sprite[0]) == pygame.Surface:
+                self.sprite = (pygame.transform.scale(sprite[0], (self.width, self.height)),  (self.x, self.y))
 
     def update(self, gameinfo):
         self.rect = pygame.Rect((self.x, self.y), (self.width, self.height))
 
         # updates the renderable sprite
-        if type(self.sprite["Sprite"]) == pygame.Rect:
-            self.sprite = {
-                "Sprite": self.rect,
-                "Color": self.sprite["Color"]}
-
-        elif type(self.sprite["Sprite"]) == pygame.Surface:
-            self.sprite = {
-               "Sprite": self.sprite["Sprite"],
-               "Coordinates": (self.x, self.y)}
+        if type(self.sprite[0]) == pygame.Rect:
+            self.sprite = (self.rect, self.sprite[1])
+        elif type(self.sprite[0]) == pygame.Surface:
+            self.sprite = (self.sprite[0], (self.x, self.y))
 
     def return_render_data(self):
         return self.sprite

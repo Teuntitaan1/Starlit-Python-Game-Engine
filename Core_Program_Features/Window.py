@@ -5,22 +5,23 @@ class Window:
 
     def __init__(
             self,
-            background: dict,
-            windowsize: tuple = (800, 800),
-            window_caption: str = "Starlit default window",):
+            background: tuple,
+            window_size: tuple = (800, 800),
+            window_caption: str = "Starlit default window",
+            window_icon=pygame.image.load("Images/Cat.jpg")):
 
-        self.width = windowsize[0]
-        self.height = windowsize[1]
+        self.width = window_size[0]
+        self.height = window_size[1]
 
         self.background = background
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption(window_caption)
 
-    def render(self, sprite: dict):
-        if type(sprite["Sprite"]) == pygame.Rect:
-            pygame.draw.rect(self.screen, sprite["Color"], sprite["Sprite"])
-        elif type(sprite["Sprite"]) == pygame.Surface:
-            self.screen.blit(sprite["Sprite"], sprite["Coordinates"])
+    def render(self, sprite: tuple):
+        if type(sprite[0]) == pygame.Rect:
+            pygame.draw.rect(self.screen, sprite[1], sprite[0])
+        elif type(sprite[0]) == pygame.Surface:
+            self.screen.blit(sprite[0], sprite[1])
         else:
             raise Exception("Image type not supported.")
 
