@@ -1,4 +1,4 @@
-import pygame
+from Images import *
 
 
 class Window:
@@ -8,7 +8,7 @@ class Window:
             background: tuple,
             window_size: tuple = (800, 800),
             window_caption: str = "Starlit default window",
-            window_icon=pygame.image.load("Images/Cat.jpg")):
+            window_icon=CatImage):
 
         self.width = window_size[0]
         self.height = window_size[1]
@@ -16,6 +16,7 @@ class Window:
         self.background = background
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption(window_caption)
+        pygame.display.set_icon(window_icon.convert_alpha())
 
     def render(self, sprite: tuple):
         if type(sprite[0]) == pygame.Rect:

@@ -1,5 +1,5 @@
-import pygame
 from Entity_Classes.EntityBase import EntityBase
+from Images import *
 
 
 class Player(EntityBase):
@@ -19,7 +19,17 @@ class Player(EntityBase):
         elif key[pygame.K_RIGHT]:
             self.x += 100 * gameinfo.DeltaTime
         if key[pygame.K_SPACE]:
-            self.sprite = (pygame.transform.scale(pygame.image.load("C:\\Users\\Teunw\\Desktop\\creeren\\Starlit-Python-Game-Engine\\Images\\Cat.jpg"), (self.width, self.height)), (self.x, self.y))
+            self.sprite = (pygame.transform.scale(CatImage.convert_alpha(), (self.width, self.height)), (self.x, self.y))
 
+        # collision detection
+        for Entity in gameinfo.EntityManager.EntityList:
+            if Entity != self:
+                # if colliding, handle the collision on the colliding entity's
+                if self.rect.colliderect(Entity.rect):
+                    self.handle_collision(colliding_entity=Entity.rect)
+                    Entity.handle_collision(colliding_entity=Entity.rect)
         # look in the EntityBase class for what this function does
         super().update(gameinfo)
+
+    def handle_collision(self, colliding_entity: pygame.Rect):
+        pass

@@ -23,6 +23,8 @@ class EntityBase:
                 self.sprite = (pygame.transform.scale(sprite[0], (self.width, self.height)),  (self.x, self.y))
 
     def update(self, gameinfo):
+
+        # updates the collision rect
         self.rect = pygame.Rect((self.x, self.y), (self.width, self.height))
 
         # updates the renderable sprite
@@ -30,6 +32,9 @@ class EntityBase:
             self.sprite = (self.rect, self.sprite[1])
         elif type(self.sprite[0]) == pygame.Surface:
             self.sprite = (self.sprite[0], (self.x, self.y))
+
+    def handle_collision(self, colliding_entity: pygame.Rect):
+        print(f"i am colliding! {self}")
 
     def return_render_data(self):
         return self.sprite
